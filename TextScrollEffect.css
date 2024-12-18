@@ -28,6 +28,11 @@
   overflow-y: auto;
   scroll-behavior: smooth;
   position: relative;
+  scrollbar-width: none;
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: none;
 }
 
 .scroll-item {
