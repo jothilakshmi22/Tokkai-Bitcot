@@ -4,10 +4,8 @@ import Watch from './Watch';
 function App() {
   return (
     <div>
-
-
      <Watch/>
-     
+  
   {/* <TextScrollEffect/> */}
     </div>
   );
