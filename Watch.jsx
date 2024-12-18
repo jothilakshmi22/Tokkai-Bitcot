@@ -16,20 +16,17 @@ const Watch = () => {
     const handleWheel = (event) => {
       event.preventDefault();
 
-    
-      setScrollCount(prevCount => {
+      setScrollCount((prevCount) => {
         const newCount = prevCount + 1;
-        
 
         if (newCount >= 6) {
           setCurrentIndex((prevIndex) => (prevIndex + 1) % contentList.length);
-          return 0; 
+          return 0;
         }
-        
+
         return newCount;
       });
     };
-
 
     window.addEventListener("wheel", handleWheel, { passive: false });
 
@@ -38,10 +35,14 @@ const Watch = () => {
     };
   }, []);
 
- 
   const calculateLineWidth = (scrollCount) => {
     const baseWidth = 70;
     return Math.min(350, baseWidth * scrollCount);
+  };
+
+  const calculateOpacity = (scrollCount) => {
+    const maxScroll = 6;
+    return Math.min(1, scrollCount / maxScroll);
   };
 
   return (
@@ -56,7 +57,12 @@ const Watch = () => {
         {contentList.map((content, index) => (
           <div
             key={index}
-            className={`content ${index === currentIndex ? `visible content-${index}` : ""} `}
+            className={`content content-${index} ${
+              index === currentIndex ? "visible" : ""
+            }`}
+            style={{
+              opacity: index === currentIndex ? calculateOpacity(scrollCount) : 0,
+            }}
           >
             {content}
           </div>
@@ -65,18 +71,16 @@ const Watch = () => {
         {contentList.map((_, index) => (
           <div
             key={index}
-            className={`line line-${index} ${index === currentIndex ? 'visible' : ''}`}
+            className={`line line-${index} ${index === currentIndex ? "visible" : ""}`}
             style={{
-              width: index === currentIndex ? `${calculateLineWidth(scrollCount)}px` : '0px',
-              animationName: 'none',
-              opacity: index === currentIndex ? 1 : 0
+              width: index === currentIndex ? `${calculateLineWidth(scrollCount)}px` : "0px",
             }}
           />
         ))}
 
         {contentList.map((_, index) => (
           <div
-            className={`dot ${index === currentIndex ? `visible dot-${index}` : '' }`}
+            className={`dot ${index === currentIndex ? `visible dot-${index}` : ""}`}
             key={index}
           />
         ))}
@@ -86,13 +90,3 @@ const Watch = () => {
 };
 
 export default Watch;
-
-
-
-
-
-
-
-
-
-
